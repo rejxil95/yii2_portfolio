@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -61,16 +62,51 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+
+        // $admin = new User();
+        // $admin->username = 'admin';
+        // $admin->email = 'admin@example.com';
+        // $admin->setPassword('admin123'); // Secure password
+        // $admin->auth_key = Yii::$app->security->generateRandomString();
+        // $admin->access_token = Yii::$app->security->generateRandomString();
+        // $admin->status = 10; // Active status
+        // $admin->created_at = time();
+        // $admin->updated_at = time();
+
+        // if ($admin->save()) {
+        //     echo "Admin user created successfully!";
+        // } else {
+        //     print_r($admin->errors);
+        // }
+
+        // die;
+
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect(['modules/index']); // Change this to a different page (e.g., dashboard)
+        }
+
+        $model = new LoginForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->redirect(['site/dashboard']); // Redirect after login
+        }
+
+        return $this->render('index', [
+            'model' => $model,
+        ]);
     }
+
 
     /**
      * Login action.
      *
      * @return Response|string
      */
+
     public function actionLogin()
     {
+        //username: admin
+        //password: admin123
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -80,7 +116,6 @@ class SiteController extends Controller
             return $this->goBack();
         }
 
-        $model->password = '';
         return $this->render('login', [
             'model' => $model,
         ]);

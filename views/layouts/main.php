@@ -105,7 +105,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 <li><a href="<?php echo Url::home(); ?>" class="home-link">Luther.</a></li>
                                 <li class="current"><a href="#intro" class="smoothscroll">Intro</a></li>
                                 <li><a href="#about" class="smoothscroll">About</a></li>
-                                <li><a href="#works" class="smoothscroll">Works</a></li>
+                                <?php if (!Yii::$app->user->isGuest) { ?>
+                                    <li><a href="#login" class="smoothscroll">Logout</a></li>
+                                <?php } else { ?>
+                                    <li><a href="#login" class="smoothscroll">Login</a></li>
+                                <?php } ?>
                                 <li><a href="#contact" class="smoothscroll">Say Hello</a></li>
                             </ul>
                         </nav>
@@ -129,7 +133,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
             <div class="row">
                 <div class="column ss-copyright">
-                    <span>© Copyright Luther 2021</span> 
+                    <span>© Copyright Luther <?=date('Y');?></span> 
                     <span>Design by <a href="https://www.styleshout.com/">StyleShout</a> Distribution By <a href="https://themewagon.com">Themewagon</a></span>
                 </div>
 

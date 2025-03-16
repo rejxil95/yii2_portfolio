@@ -57,6 +57,12 @@ $config = [
             ],
         ],
         */
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // Use database RBAC
+        ],
+        'user' => [
+            'identityClass' => 'app\models\User',
+        ],
     ],
     'params' => $params,
 ];
